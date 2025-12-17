@@ -72,7 +72,7 @@ export default function Home() {
       <Section className="py-12 md:py-16">
         <LogoStrip
           label="Trusted by fashion & beauty teams"
-          logos={['L'Oréal', 'NYX', 'Schwarzkopf', 'Clara Strehle', 'LETOIT']}
+          logos={["L'Oréal", "NYX", "Schwarzkopf", "Clara Strehle", "LETOIT"]}
         />
       </Section>
 
