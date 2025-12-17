@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 
@@ -27,9 +28,16 @@ export default function Navbar() {
               {/* Logo */}
               <Link
                 href="/"
-                className="text-lg md:text-xl font-semibold tracking-tight text-zinc-900 hover:text-zinc-950 transition-colors whitespace-nowrap"
+                className="relative hover:opacity-80 transition-opacity"
               >
-                POLYPO
+                <Image
+                  src="/polypo-logo.svg"
+                  alt="Polypo"
+                  width={140}
+                  height={32}
+                  className="h-6 md:h-7 w-auto"
+                  priority
+                />
               </Link>
 
               {/* Desktop Nav Links */}
