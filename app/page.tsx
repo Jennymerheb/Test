@@ -6,6 +6,7 @@ import BentoGrid from '@/components/BentoGrid'
 import FAQAccordion from '@/components/FAQAccordion'
 import LogoStrip from '@/components/LogoStrip'
 import CTASection from '@/components/CTASection'
+import DisruptionSection from '@/components/DisruptionSection'
 
 export const metadata: Metadata = {
   title: 'Polypo - Know the size. See the fit.',
@@ -131,40 +132,8 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* The Problem */}
-      <Section>
-        <div className="space-y-12 md:space-y-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold gradient-text text-center">
-            Fashion's most expensive challenge
-          </h2>
-          <BentoGrid>
-            <GlassCard hover>
-              <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3">
-                High size-related returns
-              </h3>
-              <p className="text-gray-600 leading-relaxed">
-                Around 70% of fashion returns are due to size and fit—each costing $15–25 to process.
-              </p>
-            </GlassCard>
-            <GlassCard hover>
-              <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3">
-                Low shopper confidence
-              </h3>
-              <p className="text-gray-600 leading-relaxed">
-                Unclear fit leads to hesitation, abandoned carts, and lost trust.
-              </p>
-            </GlassCard>
-            <GlassCard hover>
-              <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3">
-                Margin erosion
-              </h3>
-              <p className="text-gray-600 leading-relaxed">
-                Bracketing inflates shipping costs and ties up inventory.
-              </p>
-            </GlassCard>
-          </BentoGrid>
-        </div>
-      </Section>
+      {/* The Problem - Fashion's most expensive challenge */}
+      <DisruptionSection />
 
       {/* How It Works */}
       <Section>
