@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
+import LiquidGlassShell from '@/components/ui/LiquidGlassShell'
 
 export default function Navbar() {
   const pathname = usePathname()
@@ -17,7 +18,12 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 px-4 md:px-6 lg:px-8 py-4 md:py-5">
       <nav className="max-w-[1400px] mx-auto flex items-center justify-between gap-4 lg:gap-6">
         {/* LEFT GLASS PILL - Logo + Nav Links */}
-        <div className="glass-nav h-14 md:h-16 transition-all duration-300">
+        <LiquidGlassShell
+          className="h-14 md:h-16"
+          intensity={85}
+          noiseOverlay={true}
+          chromaticAberration={false}
+        >
           <div className="flex items-center h-full px-5 md:px-6 gap-4 md:gap-8">
             {/* Logo */}
             <Link
@@ -112,7 +118,7 @@ export default function Navbar() {
               </svg>
             </button>
           </div>
-        </div>
+        </LiquidGlassShell>
 
         {/* RIGHT SIDE - Log in + Book a Demo */}
         <div className="hidden md:flex items-center gap-5 lg:gap-6">
@@ -124,30 +130,47 @@ export default function Navbar() {
             Log in
           </Link>
 
-          {/* Book a Demo - Glass CTA Button */}
-          <Link
-            href="/#book-demo"
-            className="glass-cta h-14 px-7 lg:px-8 flex items-center justify-center text-sm lg:text-base font-semibold text-zinc-900 hover:text-zinc-950 transition-all duration-300 whitespace-nowrap"
+          {/* Book a Demo - Liquid Glass CTA Button */}
+          <LiquidGlassShell
+            className="h-14"
+            intensity={90}
+            noiseOverlay={true}
+            chromaticAberration={false}
           >
-            Book a Demo
-          </Link>
+            <Link
+              href="/#book-demo"
+              className="h-full px-7 lg:px-8 flex items-center justify-center text-sm lg:text-base font-semibold text-zinc-900 hover:text-zinc-950 transition-colors whitespace-nowrap"
+            >
+              Book a Demo
+            </Link>
+          </LiquidGlassShell>
         </div>
 
         {/* Mobile CTA */}
         <div className="md:hidden">
-          <Link
-            href="/#book-demo"
-            className="glass-cta h-12 px-5 flex items-center justify-center text-sm font-semibold text-zinc-900 whitespace-nowrap"
+          <LiquidGlassShell
+            className="h-12"
+            intensity={90}
+            noiseOverlay={true}
           >
-            Book Demo
-          </Link>
+            <Link
+              href="/#book-demo"
+              className="h-full px-5 flex items-center justify-center text-sm font-semibold text-zinc-900 whitespace-nowrap"
+            >
+              Book Demo
+            </Link>
+          </LiquidGlassShell>
         </div>
       </nav>
 
       {/* Mobile Menu Dropdown */}
       {isMenuOpen && (
         <div className="md:hidden mt-4 max-w-[1400px] mx-auto animate-slide-up">
-          <div className="glass-nav rounded-3xl overflow-hidden">
+          <LiquidGlassShell
+            className="rounded-3xl"
+            intensity={85}
+            noiseOverlay={true}
+          >
             <div className="py-4 px-2 space-y-1">
               <Link
                 href="/platform"
@@ -185,7 +208,7 @@ export default function Navbar() {
                 Log in
               </Link>
             </div>
-          </div>
+          </LiquidGlassShell>
         </div>
       )}
     </header>

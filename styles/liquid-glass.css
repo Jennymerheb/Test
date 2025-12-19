@@ -1,0 +1,226 @@
+/**
+ * Liquid Glass Effect Styles
+ *
+ * Inspired by liquid-glass-studio (https://github.com/iyinchao/liquid-glass-studio)
+ * Simplified for production use without WebGL
+ *
+ * Core techniques from the original:
+ * - Multi-pass blur (bgPass -> vBlurPass -> hBlurPass)
+ * - Refraction with thickness and dispersion
+ * - Fresnel-based glare
+ * - Shadow depth effects
+ *
+ * Adjustable parameters:
+ * --blur-strength: Controls backdrop blur intensity (12px-24px recommended)
+ * --saturate-value: Color saturation boost (120%-160% recommended)
+ * --intensity: Overall effect intensity (0-1)
+ * --mouse-x, --mouse-y: Dynamic glare position
+ */
+
+.liquid-glass-shell {
+  position: relative;
+  isolation: isolate;
+  /* Pill shape - matches Figma corner radius */
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+/**
+ * Base Glass Layer
+ * Simulates the main refraction pass from liquid-glass-studio
+ * - backdrop-filter: Approximates the multi-pass blur
+ * - Background gradient: Simulates refraction gradient from black 10% → 25%
+ * - Border: Soft outer glow
+ * - Box-shadow: Inner shadow for depth + outer glow for refraction
+ */
+.liquid-glass-base {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+
+  /* Figma Glass settings: Base fill rgba(255,255,255,0.36) */
+  background: linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.10) 0%,
+      rgba(0, 0, 0, 0.25) 100%
+    ),
+    rgba(255, 255, 255, 0.36);
+
+  /* Approximates WebGL blur passes + saturation */
+  backdrop-filter: blur(var(--blur-strength, 18px)) saturate(var(--saturate-value, 160%));
+  -webkit-backdrop-filter: blur(var(--blur-strength, 18px)) saturate(var(--saturate-value, 160%));
+
+  /* Figma: Border 1px solid rgba(255,255,255,0.6) */
+  border: 1px solid rgba(255, 255, 255, 0.6);
+
+  /* Figma: Inner shadow (Y:4, Blur:24, 8% opacity) + outer glow */
+  box-shadow:
+    inset 0 4px 24px rgba(0, 0, 0, 0.08),
+    0 0 0 1px rgba(255, 255, 255, 0.25),
+    0 8px 32px rgba(31, 38, 135, 0.07);
+
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/**
+ * Refraction Gradient Layer
+ * Simulates the refraction/dispersion effect
+ * Uses radial gradient based on intensity for subtle color shifting
+ */
+.liquid-glass-refraction {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+
+  /* Subtle dispersion effect - stronger near edges */
+  background: radial-gradient(
+    circle at 50% 50%,
+    transparent 0%,
+    rgba(0, 0, 0, calc(0.05 * var(--intensity, 0.8))) 100%
+  );
+
+  /* Soft light blend mode simulates refraction color shifting */
+  mix-blend-mode: soft-light;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/**
+ * Glare Layer
+ * Simulates Fresnel reflection from liquid-glass-studio
+ * Dynamic position based on mouse interaction
+ */
+.liquid-glass-glare {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+
+  /* Animated glare that follows mouse position */
+  background: radial-gradient(
+    600px circle at calc(var(--mouse-x, 0.5) * 100%) calc(var(--mouse-y, 0.5) * 100%),
+    rgba(255, 255, 255, calc(0.15 * var(--intensity, 0.8))) 0%,
+    rgba(255, 255, 255, calc(0.05 * var(--intensity, 0.8))) 30%,
+    transparent 60%
+  );
+
+  border-radius: inherit;
+  pointer-events: none;
+  transition: background 0.3s ease-out;
+}
+
+/**
+ * Noise Overlay
+ * Adds micro-texture to simulate glass surface imperfections
+ * Toggle with data-noise attribute
+ */
+.liquid-glass-noise {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+
+  /* CSS noise pattern - simulates glass texture */
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(255, 255, 255, 0.03) 2px,
+      rgba(255, 255, 255, 0.03) 4px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.03) 2px,
+      rgba(0, 0, 0, 0.03) 4px
+    );
+
+  opacity: calc(0.5 * var(--intensity, 0.8));
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/**
+ * Chromatic Aberration Layers
+ * Simulates RGB color separation / dispersion from refraction
+ * Toggle with data-chromatic attribute
+ */
+.liquid-glass-chromatic {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: calc(0.15 * var(--intensity, 0.8));
+  mix-blend-mode: screen;
+}
+
+.liquid-glass-chromatic-r {
+  background: radial-gradient(
+    ellipse at 49% 50%,
+    transparent 30%,
+    rgba(255, 0, 0, 0.1) 70%,
+    transparent 100%
+  );
+}
+
+.liquid-glass-chromatic-g {
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    transparent 30%,
+    rgba(0, 255, 0, 0.1) 70%,
+    transparent 100%
+  );
+}
+
+.liquid-glass-chromatic-b {
+  background: radial-gradient(
+    ellipse at 51% 50%,
+    transparent 30%,
+    rgba(0, 0, 255, 0.1) 70%,
+    transparent 100%
+  );
+}
+
+/**
+ * Content Layer
+ * Ensures content stays on top and interactive
+ */
+.liquid-glass-content {
+  position: relative;
+  z-index: 10;
+  pointer-events: auto;
+}
+
+/**
+ * Hover Enhancement
+ * Subtle interaction feedback
+ */
+.liquid-glass-shell:hover .liquid-glass-base {
+  background: linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.12) 0%,
+      rgba(0, 0, 0, 0.28) 100%
+    ),
+    rgba(255, 255, 255, 0.40);
+  border-color: rgba(255, 255, 255, 0.65);
+}
+
+.liquid-glass-shell:hover .liquid-glass-glare {
+  background: radial-gradient(
+    500px circle at calc(var(--mouse-x, 0.5) * 100%) calc(var(--mouse-y, 0.5) * 100%),
+    rgba(255, 255, 255, calc(0.25 * var(--intensity, 0.8))) 0%,
+    rgba(255, 255, 255, calc(0.1 * var(--intensity, 0.8))) 30%,
+    transparent 60%
+  );
+}
+
+/**
+ * Reduced Motion Support
+ */
+@media (prefers-reduced-motion: reduce) {
+  .liquid-glass-glare {
+    transition: none;
+  }
+}

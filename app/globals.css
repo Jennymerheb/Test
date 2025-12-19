@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Liquid Glass Effect - inspired by liquid-glass-studio */
+@import '../styles/liquid-glass.css';
+
 @layer base {
   :root {
     --gradient-start: #f8fafc;
