@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import Hero from '@/components/Hero'
 import Section from '@/components/Section'
 import GlassCard from '@/components/GlassCard'
 import BentoGrid from '@/components/BentoGrid'
@@ -44,30 +45,7 @@ export default function Home() {
   return (
     <>
       {/* Hero */}
-      <Section className="pt-12 md:pt-20 pb-16 md:pb-24">
-        <div className="text-center space-y-8 md:space-y-10 max-w-5xl mx-auto">
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold gradient-text leading-tight animate-fade-in">
-            Know the size. See the fit.
-          </h1>
-          <p className="text-lg md:text-xl lg:text-2xl text-gray-600 leading-relaxed max-w-3xl mx-auto animate-slide-up">
-            Polypo is an AI sizing and fit-intelligence platform that shows every shopper their best size—and what to expect—before they buy.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 animate-slide-up">
-            <Link
-              href="#book-demo"
-              className="px-8 py-4 bg-gray-900 text-white text-base md:text-lg rounded-full hover:bg-gray-800 transition-all hover:scale-105 active:scale-95 w-full sm:w-auto"
-            >
-              Book a demo
-            </Link>
-            <Link
-              href="/platform"
-              className="px-8 py-4 glass-card text-gray-900 text-base md:text-lg rounded-full hover:scale-105 transition-all w-full sm:w-auto"
-            >
-              Explore the platform →
-            </Link>
-          </div>
-        </div>
-      </Section>
+      <Hero />
 
       {/* Credibility Strip */}
       <Section className="py-12 md:py-16">
