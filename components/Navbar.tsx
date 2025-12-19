@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
-import LiquidGlassShell from '@/components/ui/LiquidGlassShell'
+import LiquidGlass from '@/components/ui/LiquidGlass'
 
 export default function Navbar() {
   const pathname = usePathname()
@@ -18,11 +18,12 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 px-4 md:px-6 lg:px-8 py-4 md:py-5">
       <nav className="max-w-[1400px] mx-auto flex items-center justify-between gap-4 lg:gap-6">
         {/* LEFT GLASS PILL - Logo + Nav Links */}
-        <LiquidGlassShell
+        <LiquidGlass
           className="h-14 md:h-16"
           intensity={85}
           noiseOverlay={true}
           chromaticAberration={false}
+          hoverReactive={true}
         >
           <div className="flex items-center h-full px-5 md:px-6 gap-4 md:gap-8">
             {/* Logo */}
@@ -118,7 +119,7 @@ export default function Navbar() {
               </svg>
             </button>
           </div>
-        </LiquidGlassShell>
+        </LiquidGlass>
 
         {/* RIGHT SIDE - Log in + Book a Demo */}
         <div className="hidden md:flex items-center gap-5 lg:gap-6">
@@ -131,11 +132,12 @@ export default function Navbar() {
           </Link>
 
           {/* Book a Demo - Liquid Glass CTA Button */}
-          <LiquidGlassShell
+          <LiquidGlass
             className="h-14"
             intensity={90}
             noiseOverlay={true}
             chromaticAberration={false}
+            hoverReactive={true}
           >
             <Link
               href="/#book-demo"
@@ -143,15 +145,16 @@ export default function Navbar() {
             >
               Book a Demo
             </Link>
-          </LiquidGlassShell>
+          </LiquidGlass>
         </div>
 
         {/* Mobile CTA */}
         <div className="md:hidden">
-          <LiquidGlassShell
+          <LiquidGlass
             className="h-12"
             intensity={90}
             noiseOverlay={true}
+            hoverReactive={true}
           >
             <Link
               href="/#book-demo"
@@ -159,17 +162,18 @@ export default function Navbar() {
             >
               Book Demo
             </Link>
-          </LiquidGlassShell>
+          </LiquidGlass>
         </div>
       </nav>
 
       {/* Mobile Menu Dropdown */}
       {isMenuOpen && (
         <div className="md:hidden mt-4 max-w-[1400px] mx-auto animate-slide-up">
-          <LiquidGlassShell
+          <LiquidGlass
             className="rounded-3xl"
             intensity={85}
             noiseOverlay={true}
+            hoverReactive={false}
           >
             <div className="py-4 px-2 space-y-1">
               <Link
@@ -208,7 +212,7 @@ export default function Navbar() {
                 Log in
               </Link>
             </div>
-          </LiquidGlassShell>
+          </LiquidGlass>
         </div>
       )}
     </header>
