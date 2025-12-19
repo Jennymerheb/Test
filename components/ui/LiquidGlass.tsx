@@ -21,10 +21,6 @@ interface LiquidGlassProps {
    */
   chromaticAberration?: boolean
   /**
-   * Tint color for WebGL [r, g, b, alpha]
-   */
-  tint?: [number, number, number, number]
-  /**
    * Enable mouse hover reactivity (WebGL only)
    */
   hoverReactive?: boolean
@@ -33,11 +29,8 @@ interface LiquidGlassProps {
 /**
  * LiquidGlass - Smart wrapper that chooses WebGL or CSS implementation
  *
- * - On desktop with WebGL2 support: Uses shader-based liquid glass effect
- * - On mobile or without WebGL2: Falls back to CSS-based glass effect
- *
- * This provides the best visual quality when possible while maintaining
- * broad compatibility and performance.
+ * - On desktop with WebGL2: Uses shader-based liquid glass effect
+ * - On mobile or without WebGL2: Falls back to CSS glass effect
  */
 export default function LiquidGlass({
   children,
@@ -45,26 +38,21 @@ export default function LiquidGlass({
   intensity = 80,
   noiseOverlay = true,
   chromaticAberration = false,
-  tint = [0.95, 0.96, 0.97, 1.0],
   hoverReactive = true,
 }: LiquidGlassProps) {
   const supportsWebGL2 = useSupportsWebGL2()
 
+  // Check if className includes a custom border radius
+  const hasCustomRadius = className.includes('rounded-')
+  const borderRadiusClass = hasCustomRadius ? '' : 'rounded-full'
+
   // WebGL2 path - shader-based liquid glass
   if (supportsWebGL2) {
-    // Check if className includes a border radius override
-    const hasCustomRadius = className.includes('rounded-')
-    const borderRadiusClass = hasCustomRadius ? '' : 'rounded-full'
-
     return (
       <div className={`relative overflow-hidden ${borderRadiusClass} ${className}`}>
-        {/* WebGL canvas background */}
-        <LiquidGlassNavBackground
-          intensity={intensity}
-          tint={tint}
-          hoverReactive={hoverReactive}
-        />
-        {/* Content layer */}
+        {/* WebGL canvas background - absolutely positioned, fills container */}
+        <LiquidGlassNavBackground intensity={intensity} hoverReactive={hoverReactive} />
+        {/* Content layer - on top of canvas */}
         <div className="relative z-10">{children}</div>
       </div>
     )

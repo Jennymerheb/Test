@@ -62,14 +62,14 @@ void main() {
   vec2 p = (gl_FragCoord.xy - u_resolution * 0.5);
   vec2 p2 = u_mouseSpring;
 
-  // Simple gradient background for navbar
-  vec3 bgColor = mix(
-    vec3(0.95, 0.96, 0.97),
-    vec3(0.92, 0.93, 0.95),
-    v_uv.y
-  );
+  // Soft light gradient background - semi-transparent for glass effect
+  vec3 topColor = vec3(1.0, 1.0, 1.0);
+  vec3 bottomColor = vec3(0.90, 0.93, 0.98);
+  float t = smoothstep(0.0, 1.0, v_uv.y);
+  vec3 bgColor = mix(topColor, bottomColor, t);
 
-  fragColor = vec4(bgColor, 1.0);
+  // Output semi-transparent, NOT opaque
+  fragColor = vec4(bgColor, 0.35);
 }
 `
 
@@ -232,7 +232,7 @@ void main() {
       texture(u_blurredBg, uvB).b
     );
 
-    // Glare effect
+    // Glare effect (Fresnel-like edge highlights)
     vec2 glareDir = vec2(cos(u_glareAngle), sin(u_glareAngle));
     float glare = max(0.0, dot(normalize(normal), glareDir));
     glare = pow(glare, 3.0) * u_glareFactor;
@@ -240,10 +240,12 @@ void main() {
     vec3 finalColor = mix(refractedColor, vec3(1.0), glare);
     finalColor = mix(finalColor, u_tint.rgb, u_tint.a * 0.15);
 
-    fragColor = vec4(finalColor, 1.0);
+    // Output with semi-transparent alpha for glass effect
+    float glassAlpha = 0.65;
+    fragColor = vec4(finalColor, glassAlpha);
   } else {
-    // Outside shape - regular background
-    fragColor = vec4(baseColor, 1.0);
+    // Outside shape - transparent (let background show through)
+    fragColor = vec4(0.0, 0.0, 0.0, 0.0);
   }
 }
 `

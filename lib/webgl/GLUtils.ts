@@ -330,7 +330,7 @@ export class MultiPassRenderer {
     const gl = canvas.getContext('webgl2', {
       alpha: true,
       premultipliedAlpha: false,
-      antialias: false,
+      antialias: true,
     })
     if (!gl) throw new Error('WebGL 2 not supported')
 
@@ -338,6 +338,13 @@ export class MultiPassRenderer {
     if (!ext) throw new Error('EXT_color_buffer_float not supported')
 
     this.gl = gl
+
+    // Set clear color to fully transparent
+    gl.clearColor(0, 0, 0, 0)
+
+    // Enable blending for transparency
+    gl.enable(gl.BLEND)
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
 
     const passesArray: typeof this.passesArray = []
     for (const [index, cfg] of configs.entries()) {
@@ -366,6 +373,10 @@ export class MultiPassRenderer {
   public render(
     passUniforms?: Record<string, any>[] | Record<string, Record<string, any>>
   ): void {
+    // Clear the canvas with transparent background before first pass
+    const gl = this.gl
+    gl.clear(gl.COLOR_BUFFER_BIT)
+
     this.passesArray.forEach((pass, index) => {
       const uniforms: Record<string, any> = { ...this.globalUniforms }
 
