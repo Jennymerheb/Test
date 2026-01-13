@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 export default function Hero() {
   return (
-    <section className="relative bg-[#f8f7f6] px-6 md:px-8 pt-24 md:pt-28 pb-16 md:pb-20">
+    <section className="relative bg-gradient-to-br from-purple-100/50 via-purple-50/30 to-white/50 px-6 md:px-8 pt-24 md:pt-28 pb-16 md:pb-20">
       {/* Hero Stage - Large Rounded Container */}
       <div className="relative max-w-7xl mx-auto rounded-[56px] overflow-hidden min-h-[560px] md:min-h-[680px] shadow-2xl">
         {/* Background Image - Crisp, Full Coverage */}
@@ -43,7 +43,7 @@ export default function Hero() {
               <div className="pt-2">
                 <Link
                   href="/#book-demo"
-                  className="inline-flex items-center justify-center px-7 py-3.5 rounded-full bg-white/30 backdrop-blur-sm border border-zinc-900/15 text-zinc-900 font-semibold text-base hover:bg-white/40 transition-all duration-200 shadow-md hover:shadow-lg"
+                  className="inline-flex items-center justify-center px-7 py-3.5 rounded-full bg-gradient-to-r from-purple-600 to-purple-700 text-white font-semibold text-base hover:from-purple-700 hover:to-purple-800 transition-all duration-200 shadow-lg hover:shadow-xl"
                 >
                   Book a Demo
                 </Link>

@@ -34,7 +34,7 @@ export default function CTASection({
       <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
         <Link
           href={primaryCTA.href}
-          className="px-8 py-4 bg-gray-900 text-white text-base md:text-lg rounded-full hover:bg-gray-800 transition-all hover:scale-105 active:scale-95 w-full sm:w-auto"
+          className="px-8 py-4 bg-gradient-to-r from-purple-600 to-purple-700 text-white text-base md:text-lg rounded-full hover:from-purple-700 hover:to-purple-800 transition-all hover:scale-105 active:scale-95 w-full sm:w-auto shadow-lg hover:shadow-xl"
         >
           {primaryCTA.text}
         </Link>
